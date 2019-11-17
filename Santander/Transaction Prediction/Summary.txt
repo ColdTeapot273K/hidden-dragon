@@ -1,0 +1,41 @@
+Goal: produce some decent linear models (because interpretable/robust/cheap) w/ minimal feature engineering
+
+Roadmap:
+(dead branches mostly omitted)
+
+* Setup metric:
+- confusion matrix for interpretability
+- ROC AUC (the challenge metric)
+<after experimenting it turned out one needs to convert model predictions to discrete explicitly to achieve the same scoring behaviour as produced by Kaggle
+- modularise the scoring via function encapsulation
+- add scoring for in-sample predictions to track bias-variance
+- make a scoring function adaptation for SVM (smaller dataset, coz slow)
+
+* Setup quick & simple lower and upper bounds for the solution score:
+- make baseline models from GaussianNB & Random Forests
+(because fast and easy solutions overfit-safe solutions w/ minimal hussle for such a big and cryptic dataset)
+- make a well-tuned LightGBM booster model w/ reasonable bias-variance
+(because it's about as far as a model can get with non-NN and no feature engineering in such circumstances)
+
+* Reduce the large feature space:
+- tune Random Forest model for good bias & variance for feature selection
+<Permutation Importances were not very meaningful
+- use inner feature importances from LightGBM, extract top 10% by gain produced
+<Logistic Regression (completely untuned) showed increase in metric with extracted features compared to full feature set
+
+* Feature engineering on extracted features:
+- use Robust Scaler to rescale features without digging into their distributions to check their normality
+<speed increase on Logistic Regression, no metric increase
+- explore potential for feature space expansion with polynominals with the help of kernelized SVM
+<results turned out to be promising
+- expand feature space via Poly preprocessing
+<slightly increased the metric for Logistic Regression(regularized)
+
+* Potential expansions:
+- increase the power of SVM with smart data selection (for the smaller dataset of SVM) to grab more potential support vectors, namely, exploit the feature-similarity of the most similair members of different classes
+>might produce a significantly more correct and robust SVM model than any Logistic Regression ones. 
+- data augmentation to account for frequency of feature values(class outliers)
+>would give a significant increase to LightGBM metric (see kernel '200 Magic Models')
+- removal of hidden synthetic samples (see kernel '200 Magic Models')
+- removal of polynominals cut off by Logistic Regression regularization
+>would increase the interpretability of the current model 

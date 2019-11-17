@@ -1,0 +1,139 @@
+'''
+Random Forests:
+
+n_estimators=100, max_depth=6, random_state=1861, n_jobs=-1, class_weight='balanced'
+[42426 11545  2317  3712]
+0.7008898265733151
+
+perm default:
+0.0083 ± 0.0015	var_81
+0.0048 ± 0.0020	var_139
+0.0041 ± 0.0008	var_110
+0.0036 ± 0.0006	var_26
+0.0036 ± 0.0014	var_12
+0.0031 ± 0.0008	var_53
+
+
+n_estimators=100, max_depth=6, random_state=1861, n_jobs=-1, class_weight='balanced'
+[37814 16157  2592  3437]
+0.6353567415149101
+
+perm 'balanced_accuracy':
+0.0228 ± 0.0029	var_81
+0.0168 ± 0.0028	var_139
+0.0119 ± 0.0027	var_12
+0.0118 ± 0.0018	var_110
+0.0116 ± 0.0013	var_26
+0.0093 ± 0.0023	var_146
+0.0091 ± 0.0013	var_6
+0.0088 ± 0.0012	var_53
+0.0062 ± 0.0016	var_22
+-cut
+0.0055 ± 0.0012	var_174
+0.0051 ± 0.0017	var_76
+0.0050 ± 0.0014	var_44
+0.0049 ± 0.0013	var_99
+0.0047 ± 0.0012	var_166
+0.0043 ± 0.0013	var_190
+0.0043 ± 0.0010	var_0
+0.0041 ± 0.0007	var_179
+0.0040 ± 0.0013	var_198
+0.0039 ± 0.0005	var_21
+0.0039 ± 0.0013	var_80
+
+
+n_estimators=100, max_depth=None, min_samples_split=2, random_state=1861, n_jobs=-1, class_weight='balanced_subsample'
+
+TN: 53971, FP: 0, FN: 6029, TP: 0
+0.5
+roc_auc_score on training set: 1.000
+roc_auc_score on test set: 0.500
+'''
+
+
+'''
+Gaussian NB:
+
+[53110   861  3856  2173]
+0.6722358012806365
+0.8887812314531878 @
+'''
+
+'''
+kNN:
+
+from sklearn.neighbors import KNeighborsClassifier
+clf = KNeighborsClassifier(n_neighbors=3, n_jobs=-1)
+clf.fit(X_train, y_train) 
+
+#too expensive for a baseline model
+'''
+
+'''
+LightGBM:
+
+objective='binary', class_weight='balanced', silent='false', random_state=1861
+X_train, y_train, eval_metric='auc', early_stopping_rounds=10, eval_set=[(X_test, y_test)]
+
+TN: 44224, FP: 9747, FN: 1518, TP: 4511
+0.7838099820653086
+(proba)roc_auc_score on test set: 0.866
+roc_auc_score on training set: 0.854
+roc_auc_score on test set: 0.784
+
+
+max_depth=6, bagging_fraction=0.8, bagging_freq=1, min_child_weight=850, num_leaves=17, n_estimators=300, objective='binary', class_weight='balanced', silent='false', random_state=273
+X_train, y_train, eval_metric='auc'
+
+TN: 45296, FP: 8675, FN: 1400, TP: 4629
+(non-proba)roc_auc_score on training set: 0.853
+(non-proba)roc_auc_score on test set: 0.804
+(proba)roc_auc_score on test set: 0.887
+'''
+
+'''
+Logistic Regression:
+
+X_train, y_train
+
+TN: 53971, FP: 0, FN: 6029, TP: 0
+(non-proba)roc_auc_score on training set: 0.500
+(non-proba)roc_auc_score on test set: 0.500
+(proba)roc_auc_score on test set: 0.506
+
+
+X_imp_train, y_train
+
+TN: 53893, FP: 78, FN: 5861, TP: 168
+(non-proba)roc_auc_score on training set: 0.514
+(non-proba)roc_auc_score on test set: 0.513
+(proba)roc_auc_score on test set: 0.731
+
+
+class_weight='balanced'
+X_imp_train, y_train
+
+TN: 36705, FP: 17266, FN: 2024, TP: 4005
+(non-proba)roc_auc_score on training set: 0.673
+(non-proba)roc_auc_score on test set: 0.672
+(proba)roc_auc_score on test set: 0.732
+
+
+class_weight='balanced'
+PolynomialFeatures(2)
+
+TN: 38915, FP: 15056, FN: 1960, TP: 4069
+(non-proba)roc_auc_score on training set: 0.700
+(non-proba)roc_auc_score on test set: 0.698
+(proba)roc_auc_score on test set: 0.764
+'''
+
+'''
+SVM
+class_weight='balanced', kernel='rbf', gamma='scale', C=0.01
+len(micro_X_tn) == 14000
+
+TN: 34690, FP: 19281, FN: 1574, TP: 4455
+(non-proba)roc_auc_score on training set: 0.694
+(non-proba)roc_auc_score on test set: 0.691
+'''
